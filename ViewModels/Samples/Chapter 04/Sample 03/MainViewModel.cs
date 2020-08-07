@@ -15,7 +15,7 @@ namespace Book.ViewModels.Samples.Chapter04.Sample03
         @"This sample demonstrates the use of Splat's `MemoizingMRUCache<TParam, TVal>` type.
 
 Brushes for the color swatches are cached in a `MemoizingMRUCache<Color, Brush>` with a capacity of just 2 items. The list is virtualized, so as you scroll through it extra list items are being realized and rendered. The options allow you to control various aspects of the behavior, and there are useful statistics displayed so you can get a sense for how the caching is affecting the performance of the application.")]
-    public sealed class MainViewModel : ReactiveObject, ISupportsActivation
+    public sealed class MainViewModel : ReactiveObject, IActivatableViewModel
     {
         private readonly ViewModelActivator activator;
         private readonly ObservableAsPropertyHelper<IList<DinosaurViewModel>> dinosaurs;

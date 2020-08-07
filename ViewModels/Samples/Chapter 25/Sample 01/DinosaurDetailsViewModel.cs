@@ -11,7 +11,7 @@ namespace Book.ViewModels.Samples.Chapter25.Sample01
     using ReactiveUI;
     using Splat;
 
-    public sealed class DinosaurDetailsViewModel : ReactiveObject, ISupportsActivation
+    public sealed class DinosaurDetailsViewModel : ReactiveObject, IActivatableViewModel
     {
         private readonly int id;
         private readonly IApi api;

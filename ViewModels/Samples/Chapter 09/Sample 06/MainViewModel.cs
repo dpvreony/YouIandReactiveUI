@@ -1,3 +1,5 @@
+using DynamicData;
+
 namespace Book.ViewModels.Samples.Chapter09.Sample06
 {
     using System;
@@ -14,7 +16,7 @@ namespace Book.ViewModels.Samples.Chapter09.Sample06
 When the user deletes a dinosaur, the deletion is enacted immediately. However, an interaction is also started to give the user a small window of time via which they can undo the deletion.")]
     public sealed class MainViewModel : ReactiveObject
     {
-        private readonly IReactiveList<string> dinosaurs;
+        private readonly SourceList<string> dinosaurs;
         private readonly ReactiveCommand<Unit, Unit> addDinosaurCommand;
         private readonly ReactiveCommand<Unit, Unit> deleteDinosaurCommand;
         private readonly Interaction<UndoViewModel, bool> confirmDeleteDinosaur;
@@ -24,12 +26,12 @@ When the user deletes a dinosaur, the deletion is enacted immediately. However, 
 
         public MainViewModel()
         {
-            this.dinosaurs = new ReactiveList<string>(
+            this.dinosaurs = new SourceList<string>(
                 Data
                     .Dinosaurs
                     .All
                     .Select(dinosaur => dinosaur.Name)
-                    .ToList());
+                    .AsObservableChangeSet());
 
             this.confirmDeleteDinosaur = new Interaction<UndoViewModel, bool>();
             this.outstandingUndoInteraction = new SerialDisposable();
@@ -65,7 +67,7 @@ When the user deletes a dinosaur, the deletion is enacted immediately. However, 
                 canDelete);
         }
 
-        public IReactiveList<string> Dinosaurs => this.dinosaurs;
+        public ISourceList<string> Dinosaurs => this.dinosaurs;
 
         public ReactiveCommand<Unit, Unit> AddDinosaurCommand => this.addDinosaurCommand;
 

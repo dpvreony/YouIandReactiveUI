@@ -11,7 +11,7 @@ namespace Book.ViewModels.Samples.Chapter10.Sample01
         @"This sample demonstrates the use of `ReactiveList<T>` to ensure the UI stays up to date when items are added to, or removed from, a list.
 
 Every second, a dinosaur is randomly added or removed from the list. A current count of dinosaurs is created by hooking into `CountChanged`.")]
-    public sealed class MainViewModel : ReactiveObject, ISupportsActivation
+    public sealed class MainViewModel : ReactiveObject, IActivatableViewModel
     {
         private static readonly Random random = new Random();
         private readonly ViewModelActivator activator;

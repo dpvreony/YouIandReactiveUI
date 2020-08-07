@@ -1,4 +1,6 @@
-﻿namespace Book.ViewModels.Samples.Chapter02.Sample02
+﻿using DynamicData;
+
+namespace Book.ViewModels.Samples.Chapter02.Sample02
 {
     using System;
     using System.Collections.Generic;
@@ -32,7 +34,7 @@
         private readonly ObservableAsPropertyHelper<bool> isLoadingTweets;
         private readonly ObservableAsPropertyHelper<bool> isTweeting;
         private readonly ObservableAsPropertyHelper<int> tweetTextCharactersRemaining;
-        private readonly ReactiveList<TweetMediaAttachmentViewModel> attachments;
+        private readonly SourceList<TweetMediaAttachmentViewModel> attachments;
         private readonly IObservable<string> errors;
         private string query;
         private string tweetText;
@@ -47,7 +49,7 @@
 
             this.query = "#dinosaurs";
             this.confirmTweetInteraction = new Interaction<CancelViewModel, bool>();
-            this.attachments = new ReactiveList<TweetMediaAttachmentViewModel>();
+            this.attachments = new SourceList<TweetMediaAttachmentViewModel>();
 
             // TODO: replace all this with SerialReactiveCommand once this is addressed: https://github.com/reactiveui/ReactiveUI/issues/1536
             var cancelSearchCommand = ReactiveCommand.Create(() => { });
@@ -155,7 +157,7 @@
                             .confirmTweetInteraction
                             .Handle(new CancelViewModel())
                             .Where(answer => answer)
-                            .SelectMany(_ => PublishTweet(this.TweetText, this.Attachments.ToImmutableArray()))
+                            .SelectMany(_ => PublishTweet(this.TweetText, this.Attachments.Items.ToImmutableArray()))
                             .Select(_ => Unit.Default),
                     canTweet);
 
@@ -221,7 +223,7 @@
             set => this.RaiseAndSetIfChanged(ref this.tweetText, value);
         }
 
-        public ReactiveList<TweetMediaAttachmentViewModel> Attachments => this.attachments;
+        public SourceList<TweetMediaAttachmentViewModel> Attachments => this.attachments;
 
         // Below is code to work with Tweetinvi, the library being used to integrate with Twitter
         //

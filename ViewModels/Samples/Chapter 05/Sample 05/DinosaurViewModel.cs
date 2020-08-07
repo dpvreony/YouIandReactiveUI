@@ -28,12 +28,12 @@ namespace Book.ViewModels.Samples.Chapter05.Sample05
 
         public event System.ComponentModel.PropertyChangedEventHandler PropertyChanged;
 
-        public event PropertyChangingEventHandler PropertyChanging;
+        public event System.ComponentModel.PropertyChangingEventHandler PropertyChanging;
 
         public void RaisePropertyChanged(System.ComponentModel.PropertyChangedEventArgs args) =>
             this.PropertyChanged?.Invoke(this, args);
 
-        public void RaisePropertyChanging(PropertyChangingEventArgs args) =>
+        public void RaisePropertyChanging(System.ComponentModel.PropertyChangingEventArgs args) =>
             this.PropertyChanging?.Invoke(this, args);
     }
 }

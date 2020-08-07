@@ -1,4 +1,6 @@
-﻿namespace Book.ViewModels.Samples.Chapter02.Sample02
+﻿using DynamicData;
+
+namespace Book.ViewModels.Samples.Chapter02.Sample02
 {
     using System;
     using System.Collections.Generic;
@@ -7,7 +9,7 @@
     using ReactiveUI;
 
     // Just a reactive list that gives us an extra hook to tell us which indices in the list are retrieved.
-    public sealed class TweetList : ReactiveList<TweetViewModel>
+    public sealed class TweetList : SourceList<TweetViewModel>
     {
         private readonly Subject<int> itemRetrieved;
 

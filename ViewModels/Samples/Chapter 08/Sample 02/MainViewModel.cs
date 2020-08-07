@@ -1,3 +1,5 @@
+using DynamicData;
+
 namespace Book.ViewModels.Samples.Chapter08.Sample02
 {
     using System.Linq;
@@ -12,7 +14,7 @@ namespace Book.ViewModels.Samples.Chapter08.Sample02
 Both buttons are backed by a `ReactiveCommand<Unit, Unit>`, and the logic for the buttons executes synchronously. Each button is constructed with a `canExecute` that dictates whether that command can execute. In the case of `AddDinosaurCommand`, it can only execute if a name has been entered. In the case of `DeleteDinosaurCommand`, it can only execute if a dinosaur has been selected in the list.")]
     public sealed class MainViewModel : ReactiveObject
     {
-        private readonly IReactiveList<string> dinosaurs;
+        private readonly SourceList<string> dinosaurs;
         private readonly ReactiveCommand<Unit, Unit> addDinosaurCommand;
         private readonly ReactiveCommand<Unit, Unit> deleteDinosaurCommand;
         private string name;
@@ -20,12 +22,12 @@ Both buttons are backed by a `ReactiveCommand<Unit, Unit>`, and the logic for th
 
         public MainViewModel()
         {
-            this.dinosaurs = new ReactiveList<string>(
+            this.dinosaurs = new SourceList<string>(
                 Data
                     .Dinosaurs
                     .All
                     .Select(dinosaur => dinosaur.Name)
-                    .ToList());
+                    .AsObservableChangeSet());
 
             var canAdd = this
                 .WhenAnyValue(x => x.Name)
@@ -41,7 +43,7 @@ Both buttons are backed by a `ReactiveCommand<Unit, Unit>`, and the logic for th
                 canDelete);
         }
 
-        public IReactiveList<string> Dinosaurs => this.dinosaurs;
+        public ISourceList<string> Dinosaurs => this.dinosaurs;
 
         public ReactiveCommand<Unit, Unit> AddDinosaurCommand => this.addDinosaurCommand;
 

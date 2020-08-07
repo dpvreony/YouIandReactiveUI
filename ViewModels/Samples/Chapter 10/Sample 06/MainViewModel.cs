@@ -11,7 +11,7 @@ namespace Book.ViewModels.Samples.Chapter10.Sample06
     [Sample(
         "CreateDerivedList: complex",
         @"This sample is a 'live' display of votes for people's favorite dinosaurs. The user can sort and filter the data. 'New' votes are highlighted briefly in green. Finally, there is a tally of votes per dinosaur on the right, which is also dependent upon the current filter.")]
-    public sealed class MainViewModel : ReactiveObject, ISupportsActivation
+    public sealed class MainViewModel : ReactiveObject, IActivatableViewModel
     {
         private static readonly Random random = new Random();
         private readonly ViewModelActivator activator;

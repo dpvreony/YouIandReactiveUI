@@ -9,7 +9,7 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Book</RootNamespace>
     <AssemblyName>Book</AssemblyName>
-    <TargetFrameworkVersion>v4.7.1</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <ProjectTypeGuids>{60dc8134-eba5-43b8-bcc9-bb4bc16c2548};{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}</ProjectTypeGuids>
     <WarningLevel>4</WarningLevel>
@@ -1115,9 +1115,9 @@
     <PackageReference Include="Extended.Wpf.Toolkit" Version="3.2.0" />
     <PackageReference Include="MahApps.Metro" Version="1.2.4" />
     <PackageReference Include="MahApps.Metro.Resources" Version="0.6.1" />
-    <PackageReference Include="ReactiveUI" Version="8.0.1" />
-    <PackageReference Include="ReactiveUI.WPF" Version="8.0.1" />
-    <PackageReference Include="ReactiveUI.Events.WPF" Version="8.0.1" />
+    <PackageReference Include="ReactiveUI" Version="11.5.17" />
+    <PackageReference Include="ReactiveUI.WPF" Version="11.5.17" />
+    <PackageReference Include="ReactiveUI.Events.WPF" Version="11.5.17" />
     <PackageReference Include="System.Reactive" Version="3.1.1" />
     <PackageReference Include="ToastNotifications.Messages" Version="2.2.5" />
   </ItemGroup>

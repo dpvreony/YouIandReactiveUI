@@ -1,3 +1,5 @@
+using DynamicData;
+
 namespace Book.ViewModels.Samples.Chapter09.Sample05
 {
     using System;
@@ -25,7 +27,7 @@ Drawing cards will prompt the user to confirm each card drawn. When the user cho
         private readonly Interaction<Unit, bool> drawAnotherInteraction;
         private readonly ReactiveCommand<Unit, Unit> draw1Command;
         private readonly ReactiveCommand<Unit, Unit> draw10Command;
-        private readonly ReactiveList<string> hand;
+        private readonly SourceList<string> hand;
         private readonly ObservableAsPropertyHelper<string> handDisplay;
 
         public MainViewModel()
@@ -35,13 +37,13 @@ Drawing cards will prompt the user to confirm each card drawn. When the user cho
                 () => this.Draw(1));
             this.draw10Command = ReactiveCommand.CreateFromObservable(
                 () => this.Draw(10));
-            this.hand = new ReactiveList<string>();
+            this.hand = new SourceList<string>();
             this.handDisplay = hand
-                .Changed
+                .Connect()
                 .Select(
                     _ =>
                         this
-                            .hand
+                            .hand.Items
                             .Aggregate("You drew:", (acc, next) => acc + Environment.NewLine + next))
                 .ToProperty(this, x => x.HandDisplay);
         }

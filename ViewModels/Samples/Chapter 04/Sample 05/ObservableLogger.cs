@@ -17,6 +17,16 @@ namespace Book.ViewModels.Samples.Chapter04.Sample05
 
         public IObservable<(LogLevel level, string message)> Messages => this.messages;
 
+        public void Write(Exception exception, string message, Type type, LogLevel logLevel)
+        {
+            if (logLevel < this.Level)
+            {
+                return;
+            }
+
+            this.messages.OnNext((logLevel, message));
+        }
+
         public LogLevel Level
         {
             get;
@@ -24,6 +34,26 @@ namespace Book.ViewModels.Samples.Chapter04.Sample05
         }
 
         public void Write(string message, LogLevel logLevel)
+        {
+            if (logLevel < this.Level)
+            {
+                return;
+            }
+
+            this.messages.OnNext((logLevel, message));
+        }
+
+        public void Write(Exception exception, string message, LogLevel logLevel)
+        {
+            if (logLevel < this.Level)
+            {
+                return;
+            }
+
+            this.messages.OnNext((logLevel, message));
+        }
+
+        public void Write(string message, Type type, LogLevel logLevel)
         {
             if (logLevel < this.Level)
             {

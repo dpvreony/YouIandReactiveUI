@@ -5,7 +5,7 @@ namespace Book.ViewModels.Samples.Chapter18.Sample04
     using System.Reactive.Subjects;
     using ReactiveUI;
 
-    public sealed class ChildViewModel : ReactiveObject, ISupportsActivation
+    public sealed class ChildViewModel : ReactiveObject, IActivatableViewModel
     {
         private readonly ViewModelActivator activator;
         private readonly Subject<string> messages;

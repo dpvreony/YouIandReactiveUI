@@ -1,3 +1,5 @@
+using DynamicData;
+
 namespace Book.ViewModels.Samples.Chapter09.Sample02
 {
     using System;
@@ -15,7 +17,7 @@ The `MainViewModel` declare an `Interaction<string, bool>`. When the user attemp
 The view handles the interaction by asking the user to confirm. It then calls `SetOutput` against the interaction's context object, telling the view model what answer the user gave.")]
     public sealed class MainViewModel : ReactiveObject
     {
-        private readonly IReactiveList<string> dinosaurs;
+        private readonly SourceList<string> dinosaurs;
         private readonly ReactiveCommand<Unit, Unit> addDinosaurCommand;
         private readonly ReactiveCommand<Unit, Unit> deleteDinosaurCommand;
         private readonly Interaction<string, bool> confirmDeleteDinosaur;
@@ -24,12 +26,12 @@ The view handles the interaction by asking the user to confirm. It then calls `S
 
         public MainViewModel()
         {
-            this.dinosaurs = new ReactiveList<string>(
+            this.dinosaurs = new SourceList<string>(
                 Data
                     .Dinosaurs
                     .All
                     .Select(dinosaur => dinosaur.Name)
-                    .ToList());
+                    .AsObservableChangeSet());
 
             this.confirmDeleteDinosaur = new Interaction<string, bool>();
 
@@ -58,7 +60,7 @@ The view handles the interaction by asking the user to confirm. It then calls `S
                 canDelete);
         }
 
-        public IReactiveList<string> Dinosaurs => this.dinosaurs;
+        public ISourceList<string> Dinosaurs => this.dinosaurs;
 
         public ReactiveCommand<Unit, Unit> AddDinosaurCommand => this.addDinosaurCommand;
 

@@ -12,7 +12,7 @@ namespace Book.ViewModels.Samples.Chapter06.Sample05
         @"This sample demonstrates the use of `WhenAnyObservable` to monitor an observable exposed via a property.
 
 Each of the exhibitions in the list is backed by an `ExhibitionViewModel`. It exposes a property called `OpenCountdown` of type `IObservable<TimeSpan>`. The `MainViewModel` uses `WhenAnyObservable` to dereference the `OpenCountdown` for the selected exhibition. From there it creates the display string shown on the right.")]
-    public sealed class MainViewModel : ReactiveObject, ISupportsActivation
+    public sealed class MainViewModel : ReactiveObject, IActivatableViewModel
     {
         private readonly ViewModelActivator activator;
         private readonly List<ExhibitionViewModel> exhibitions;

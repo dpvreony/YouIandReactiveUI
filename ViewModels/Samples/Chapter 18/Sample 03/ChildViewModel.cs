@@ -5,7 +5,7 @@ namespace Book.ViewModels.Samples.Chapter18.Sample03
     using System.Reactive.Linq;
     using ReactiveUI;
 
-    public sealed class ChildViewModel : ReactiveObject, ISupportsActivation
+    public sealed class ChildViewModel : ReactiveObject, IActivatableViewModel
     {
         private readonly ViewModelActivator activator;
         private readonly bool useExpensiveResource;

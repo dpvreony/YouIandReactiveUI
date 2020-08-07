@@ -11,7 +11,7 @@ namespace Book.ViewModels.Samples.Chapter10.Sample05
         @"This sample demonstrates the use of `CreateDerivedList` to create a sorted list based on the contents of another.
 
 The view model contains a `ReactiveList<Dinosaur>`, which is randomly modified every second. It derives a second list of type `IReactiveDerivedList<DinosaurViewModel>` from the list of models, using the `selector` parameter to convert each model to a view model, and the `orderer` to ensure dinosaurs are sorted alphabetically.")]
-    public sealed class MainViewModel : ReactiveObject, ISupportsActivation
+    public sealed class MainViewModel : ReactiveObject, IActivatableViewModel
     {
         private static readonly Random random = new Random();
         private readonly ViewModelActivator activator;

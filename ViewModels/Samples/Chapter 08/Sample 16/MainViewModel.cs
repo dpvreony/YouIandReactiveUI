@@ -14,7 +14,7 @@ namespace Book.ViewModels.Samples.Chapter08.Sample16
         @"This sample demonstrates how an asynchronous task (loading ""roars"", in this case) can be encapsulated in a command even though the user doesn't directly instigate execution of that command.
 
 Every 10 seconds, the `refreshRoarsCommand` is automatically executed without user intervention. Any errors are surfaced with a generic error message.")]
-    public sealed class MainViewModel : ReactiveObject, ISupportsActivation
+    public sealed class MainViewModel : ReactiveObject, IActivatableViewModel
     {
         private static readonly Random random = new Random();
         private readonly ViewModelActivator activator;

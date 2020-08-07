@@ -1,3 +1,5 @@
+using DynamicData;
+
 namespace Book.ViewModels.Samples.Chapter08.Sample01
 {
     using System.Linq;
@@ -12,7 +14,7 @@ namespace Book.ViewModels.Samples.Chapter08.Sample01
 Both buttons are backed by a `ReactiveCommand<Unit, Unit>`, and the logic for the buttons executes synchronously.")]
     public sealed class MainViewModel : ReactiveObject
     {
-        private readonly IReactiveList<string> dinosaurs;
+        private readonly SourceList<string> dinosaurs;
         private readonly ReactiveCommand<Unit, Unit> addDinosaurCommand;
         private readonly ReactiveCommand<Unit, Unit> deleteDinosaurCommand;
         private string name;
@@ -20,12 +22,13 @@ Both buttons are backed by a `ReactiveCommand<Unit, Unit>`, and the logic for th
 
         public MainViewModel()
         {
-            this.dinosaurs = new ReactiveList<string>(
+            this.dinosaurs = new SourceList<string>(
                 Data
-                    .Dinosaurs
-                    .All
-                    .Select(dinosaur => dinosaur.Name)
-                    .ToList());
+                .Dinosaurs
+                .All
+                .Select(dinosaur => dinosaur.Name)
+                .AsObservableChangeSet()
+                );
 
             this.addDinosaurCommand = ReactiveCommand.Create(
                 () => this.dinosaurs.Add(this.Name));
@@ -33,7 +36,7 @@ Both buttons are backed by a `ReactiveCommand<Unit, Unit>`, and the logic for th
                 () => { this.dinosaurs.Remove(this.SelectedDinosaur); });
         }
 
-        public IReactiveList<string> Dinosaurs => this.dinosaurs;
+        public IObservableList<string> Dinosaurs => this.dinosaurs;
 
         public ReactiveCommand<Unit, Unit> AddDinosaurCommand => this.addDinosaurCommand;
 

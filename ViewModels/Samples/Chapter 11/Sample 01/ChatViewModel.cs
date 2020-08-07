@@ -1,3 +1,5 @@
+using DynamicData;
+
 namespace Book.ViewModels.Samples.Chapter11.Sample01
 {
     using System;
@@ -12,7 +14,7 @@ namespace Book.ViewModels.Samples.Chapter11.Sample01
         private readonly string room;
         private readonly string user;
         private readonly ReactiveCommand<Unit, Unit> sendMessageCommand;
-        private readonly IReactiveList<ChatMessageViewModel> chatMessages;
+        private readonly SourceList<ChatMessageViewModel> chatMessages;
         private string message;
 
         public ChatViewModel(string room, string user)
@@ -25,7 +27,7 @@ namespace Book.ViewModels.Samples.Chapter11.Sample01
             this.messageBus = messageBus;
             this.room = room;
             this.user = user;
-            this.chatMessages = new ReactiveList<ChatMessageViewModel>();
+            this.chatMessages = new SourceList<ChatMessageViewModel>();
 
             var canSendMessage = this
                 .WhenAnyValue(x => x.Message)
@@ -55,7 +57,7 @@ namespace Book.ViewModels.Samples.Chapter11.Sample01
 
         public string Title => this.user + " [" + this.room + "]";
 
-        public IReactiveList<ChatMessageViewModel> ChatMessages => this.chatMessages;
+        public ISourceList<ChatMessageViewModel> ChatMessages => this.chatMessages;
 
         public string Message
         {

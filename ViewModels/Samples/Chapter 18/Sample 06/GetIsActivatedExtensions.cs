@@ -9,7 +9,7 @@ namespace Book.ViewModels.Samples.Chapter18.Sample06
     // Some useful extensions to turn activatable objects into an IObservable<bool>.
     public static class GetIsActivatedExtensions
     {
-        public static IObservable<bool> GetIsActivated(this ISupportsActivation @this) =>
+        public static IObservable<bool> GetIsActivated(this IActivatableViewModel @this) =>
             Observable
                 .Merge(
                     @this.Activator.Activated.Select(_ => true),
@@ -17,7 +17,7 @@ namespace Book.ViewModels.Samples.Chapter18.Sample06
                 .Replay(1)
                 .RefCount();
 
-        public static IObservable<bool> GetIsActivated(this IActivatable @this)
+        public static IObservable<bool> GetIsActivated(this IActivatableView @this)
         {
             var activationForViewFetcher = Locator.Current.GetService<IActivationForViewFetcher>();
             return activationForViewFetcher
