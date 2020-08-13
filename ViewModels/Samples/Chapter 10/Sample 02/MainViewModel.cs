@@ -1,3 +1,5 @@
+using DynamicData;
+
 namespace Book.ViewModels.Samples.Chapter10.Sample02
 {
     using System;
@@ -13,33 +15,35 @@ The `MainViewModel` exposes a list of `DinosaurViewModel`. Each `DinosaurViewMod
     public sealed class MainViewModel : ReactiveObject
     {
         private static readonly Random random = new Random();
-        private readonly IReactiveList<DinosaurViewModel> dinosaurs;
+        private readonly SourceList<DinosaurViewModel> dinosaurs;
         private readonly ObservableAsPropertyHelper<int> totalFossilCount;
 
         public MainViewModel()
         {
-            this.dinosaurs = new ReactiveList<DinosaurViewModel>(
+            this.dinosaurs = new SourceList<DinosaurViewModel>(
                 Data
                     .Dinosaurs
                     .All
                     .Take(10)
-                    .Select(dinosaur => new DinosaurViewModel(dinosaur.Name, random.Next(0, 10))));
-            this.dinosaurs.ChangeTrackingEnabled = true;
+                    .Select(dinosaur => new DinosaurViewModel(dinosaur.Name, random.Next(0, 10)))
+                    .AsObservableChangeSet());
+            //this.dinosaurs.ChangeTrackingEnabled = true;
 
             this.totalFossilCount = this
                 .dinosaurs
-                .ItemChanged
+                .Connect()
                 .Select(_ => this.CountFossils())
                 .ToProperty(this, x => x.TotalFossilCount, initialValue: this.CountFossils());
         }
 
-        public IReactiveList<DinosaurViewModel> Dinosaurs => this.dinosaurs;
+        public IObservableList<DinosaurViewModel> Dinosaurs => this.dinosaurs;
 
         public int TotalFossilCount => this.totalFossilCount.Value;
 
         private int CountFossils() =>
             this
                 .dinosaurs
+                .Items
                 .Sum(dinosaur => dinosaur.FossilCount.GetValueOrDefault());
     }
 }

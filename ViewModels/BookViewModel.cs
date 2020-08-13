@@ -1,3 +1,5 @@
+using DynamicData;
+
 namespace Book.ViewModels
 {
     using System;
@@ -11,7 +13,7 @@ namespace Book.ViewModels
     public sealed class BookViewModel : ReactiveObject
     {
         private readonly ICollection<SampleWithChapterViewModel> samplesWithChapters;
-        private readonly IReactiveDerivedList<SampleWithChapterViewModel> filteredSamplesWithChapters;
+        private readonly SourceList<SampleWithChapterViewModel> filteredSamplesWithChapters;
         private readonly ReactiveCommand<Unit, Unit> forceGcCommand;
         private readonly ReactiveCommand<Unit, Unit> filterCommand;
         private SampleWithChapterViewModel selectedSampleWithChapter;
@@ -86,7 +88,7 @@ namespace Book.ViewModels
 
         public ICollection<SampleWithChapterViewModel> SamplesWithChapters => this.samplesWithChapters;
 
-        public IReactiveDerivedList<SampleWithChapterViewModel> FilteredSamplesWithChapters => this.filteredSamplesWithChapters;
+        public SourceList<SampleWithChapterViewModel> FilteredSamplesWithChapters => this.filteredSamplesWithChapters;
 
         public SampleWithChapterViewModel SelectedSampleWithChapter
         {

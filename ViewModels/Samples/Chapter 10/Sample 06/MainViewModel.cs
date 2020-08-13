@@ -1,3 +1,5 @@
+using DynamicData;
+
 namespace Book.ViewModels.Samples.Chapter10.Sample06
 {
     using System;
@@ -17,7 +19,7 @@ namespace Book.ViewModels.Samples.Chapter10.Sample06
         private readonly ViewModelActivator activator;
         private readonly ReactiveCommand<OrderBy, Unit> orderByCommand;
         private readonly IReactiveList<Vote> voteModels;
-        private readonly IReactiveDerivedList<VoteViewModel> votes;
+        private readonly SourceList<VoteViewModel> votes;
         private readonly ObservableAsPropertyHelper<IList<VoteCountViewModel>> voteCounts;
         private string filter;
         private OrderBy orderBy;
@@ -82,7 +84,7 @@ namespace Book.ViewModels.Samples.Chapter10.Sample06
 
         public ReactiveCommand<OrderBy, Unit> OrderByCommand => this.orderByCommand;
 
-        public IReactiveDerivedList<VoteViewModel> Votes => this.votes;
+        public SourceList<VoteViewModel> Votes => this.votes;
 
         public IList<VoteCountViewModel> VoteCounts => this.voteCounts.Value;
 

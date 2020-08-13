@@ -60,7 +60,7 @@ The view handles the interaction by asking the user to confirm. It then calls `S
                 canDelete);
         }
 
-        public ISourceList<string> Dinosaurs => this.dinosaurs;
+        public IObservableList<string> Dinosaurs => this.dinosaurs;
 
         public ReactiveCommand<Unit, Unit> AddDinosaurCommand => this.addDinosaurCommand;
 

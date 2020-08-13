@@ -1,3 +1,5 @@
+using DynamicData;
+
 namespace Book.ViewModels.Samples.Chapter11.Sample01
 {
     using System.Reactive;
@@ -8,14 +10,14 @@ namespace Book.ViewModels.Samples.Chapter11.Sample01
         @"This sample shows a chat system that uses `MessageBus` as a means of tying collaborating components together. Any number of room+user combinations can be added. When a user posts a message, that message will appear to all other users in the same room.")]
     public sealed class MainViewModel : ReactiveObject
     {
-        private readonly ReactiveList<ChatViewModel> chats;
+        private readonly SourceList<ChatViewModel> chats;
         private readonly ReactiveCommand<Unit, Unit> addChatCommand;
         private string room;
         private string user;
 
         public MainViewModel()
         {
-            this.chats = new ReactiveList<ChatViewModel>();
+            this.chats = new SourceList<ChatViewModel>();
 
             var canAddChat = this
                 .WhenAnyValue(
@@ -30,7 +32,7 @@ namespace Book.ViewModels.Samples.Chapter11.Sample01
 
         public ReactiveCommand<Unit, Unit> AddChatCommand => this.addChatCommand;
 
-        public IReactiveList<ChatViewModel> Chats => this.chats;
+        public IObservableList<ChatViewModel> Chats => this.chats;
 
         public string Room
         {

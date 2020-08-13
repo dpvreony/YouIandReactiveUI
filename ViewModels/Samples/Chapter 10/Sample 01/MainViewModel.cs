@@ -1,3 +1,6 @@
+using DynamicData;
+using DynamicData.Binding;
+
 namespace Book.ViewModels.Samples.Chapter10.Sample01
 {
     using System;
@@ -15,18 +18,18 @@ Every second, a dinosaur is randomly added or removed from the list. A current c
     {
         private static readonly Random random = new Random();
         private readonly ViewModelActivator activator;
-        private readonly IReactiveList<string> dinosaurs;
+        private readonly SourceList<string> dinosaurs;
         private readonly ObservableAsPropertyHelper<int> count;
 
         public MainViewModel()
         {
             this.activator = new ViewModelActivator();
-            this.dinosaurs = new ReactiveList<string>(
+            this.dinosaurs = new SourceList<string>(
                 Data
                     .Dinosaurs
                     .All
                     .Take(10)
-                    .Select(dinosaur => dinosaur.Name));
+                    .Select(dinosaur => dinosaur.Name).AsObservableChangeSet());
             this.count = this
                 .dinosaurs
                 .CountChanged
@@ -46,7 +49,7 @@ Every second, a dinosaur is randomly added or removed from the list. A current c
 
         public ViewModelActivator Activator => this.activator;
 
-        public IReactiveList<string> Dinosaurs => this.dinosaurs;
+        public ISourceList<string> Dinosaurs => this.dinosaurs;
 
         public int Count => this.count.Value;
 

@@ -1,3 +1,6 @@
+using Book.ViewModels.Data;
+using DynamicData;
+
 namespace Book.ViewModels.Samples.Chapter10.Sample03
 {
     using System;
@@ -15,21 +18,22 @@ The view model contains a `ReactiveList<Dinosaur>`, which is randomly modified e
     {
         private static readonly Random random = new Random();
         private readonly ViewModelActivator activator;
-        private readonly IReactiveList<Data.Dinosaur> dinosaurModels;
-        private readonly IReactiveDerivedList<DinosaurViewModel> dinosaurs;
+        private readonly SourceList<Data.Dinosaur> dinosaurModels;
+        private readonly IObservableList<DinosaurViewModel> dinosaurs;
 
         public MainViewModel()
         {
             this.activator = new ViewModelActivator();
-            this.dinosaurModels = new ReactiveList<Data.Dinosaur>(
+            this.dinosaurModels = new SourceList<Dinosaur>(
                 Data
                     .Dinosaurs
                     .All
-                    .Take(10));
+                    .Take(10)
+                    .AsObservableChangeSet());
             this.dinosaurs = this
                 .dinosaurModels
-                .CreateDerivedCollection(
-                    selector: dinosaur => new DinosaurViewModel(dinosaur.Name));
+                .Connect()
+                .Transform(dinosaur => new DinosaurViewModel(dinosaur.Name)).AsObservableList();
 
             this
                 .WhenActivated(
@@ -45,7 +49,7 @@ The view model contains a `ReactiveList<Dinosaur>`, which is randomly modified e
 
         public ViewModelActivator Activator => this.activator;
 
-        public IReactiveDerivedList<DinosaurViewModel> Dinosaurs => this.dinosaurs;
+        public IObservableList<DinosaurViewModel> Dinosaurs => this.dinosaurs;
 
         private void MakeRandomChange()
         {
